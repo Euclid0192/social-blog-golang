@@ -22,6 +22,8 @@ func main() {
 		},
 	}
 
+	// log.Println("DB address... ", cfg.db.addr)
+
 	db, err := db.New(
 		cfg.db.addr,
 		cfg.db.maxOpenConns,
@@ -31,6 +33,9 @@ func main() {
 	if err != nil {
 		log.Panic(err)
 	}
+	/// Close the connection db
+	defer db.Close()
+	log.Println("database connection pool established...")
 
 	/// Storage (Repository Pattern)
 	store := store.NewStorage(db)
